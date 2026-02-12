@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EAC Creator Registration System</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:'Orbitron',sans-serif;
+    background:radial-gradient(circle at top,#1b2735,#090a0f 70%);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+.container{
+    background:rgba(0,0,0,0.8);
+    padding:30px;
+    border-radius:20px;
+    width:400px;
+    box-shadow:0 0 30px rgba(0,255,255,0.6);
+}
+h2{text-align:center;color:cyan;margin-bottom:5px}
+.subtitle{text-align:center;font-size:12px;color:#aaa;margin-bottom:20px}
+label{font-size:13px;font-weight:bold}
+input,select,textarea{
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+    margin-bottom:15px;
+    border-radius:10px;
+    border:none;
+    outline:none;
+}
+textarea{resize:none}
+button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    background:cyan;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+    margin-top:5px;
+}
+button:hover{box-shadow:0 0 15px cyan}
+.admin-panel{
+    display:none;
+    margin-top:20px;
+    background:#111;
+    padding:15px;
+    border-radius:15px;
+}
+.status{
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+}
+.small-btn{
+    background:#444;
+    color:white;
+    font-size:12px;
+    margin-top:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>🚀 EAC Creator System</h2>
+<div class="subtitle">Elite Astronomy Creator Recruitment</div>
+
+<form id="eacForm">
+<label>Nama:</label>
+<input type="text" name="nama" required>
+
+<label>Umur:</label>
+<input type="number" name="umur" required>
+
+<label>Status:</label>
+<select name="status" required>
+<option value="">-- Pilih Status --</option>
+<option value="Pelajar">Pelajar</option>
+<option value="Pekerja">Pekerja</option>
+<option value="Berkeluarga">Berkeluarga</option>
+</select>
+
+<label>Alasan ingin menjadi anggota kreator EAC:</label>
+<textarea name="alasan" rows="3" required></textarea>
+
+<label>Nama akun TikTok:</label>
+<input type="text" name="tiktok" required>
+
+<label>Film/Animasi Astronomi favorit:</label>
+<input type="text" name="film" required>
+
+<label>Screenshot akun TikTok:</label>
+<input type="file" required>
+
+<button type="submit">Kirim Pendaftaran</button>
+</form>
+
+<div class="status" id="statusText"></div>
+
+<button class="small-btn" onclick="toggleAdmin()">🔒 Admin Panel</button>
+
+<div class="admin-panel" id="adminPanel">
+<h3>Panel Seleksi Admin</h3>
+<button onclick="setStatus('DITERIMA ✅')">Terima</button>
+<button onclick="setStatus('DITOLAK ❌')">Tolak</button>
+<button onclick="resetStatus()">Reset</button>
+</div>
+</div>
+
+<script>
+const form=document.getElementById('eacForm');
+const statusText=document.getElementById('statusText');
+const adminPanel=document.getElementById('adminPanel');
+
+form.addEventListener('submit',function(e){
+    e.preventDefault();
+
+    const data={
+        nama:form.nama.value,
+        umur:form.umur.value,
+        status:form.status.value,
+        alasan:form.alasan.value,
+        tiktok:form.tiktok.value,
+        film:form.film.value
+    };
+
+    localStorage.setItem('EAC_Data',JSON.stringify(data));
+
+    statusText.innerHTML="⏳ Menunggu Seleksi Admin...";
+    statusText.style.color="orange";
+
+    alert("🚀 Pendaftaran berhasil dikirim!");
+    form.reset();
+});
+
+function toggleAdmin(){
+    const password=prompt("Masukkan Password Admin:");
+    if(password==="EAC2026"){
+        adminPanel.style.display="block";
+    }else{
+        alert("Password salah!");
+    }
+}
+
+function setStatus(text){
+    statusText.innerHTML=text;
+    statusText.style.color=text.includes('DITERIMA')?'lightgreen':'red';
+}
+
+function resetStatus(){
+    statusText.innerHTML="";
+}
+</script>
+
+</body>
+</html>
