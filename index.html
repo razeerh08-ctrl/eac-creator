@@ -3,164 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EAC Creator Registration System</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<title>Pendaftaran Kreator EAC</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-    margin:0;
-    font-family:'Orbitron',sans-serif;
-    background:radial-gradient(circle at top,#1b2735,#090a0f 70%);
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  background: black;
+  color: white;
 }
-.container{
-    background:rgba(0,0,0,0.8);
-    padding:30px;
-    border-radius:20px;
-    width:400px;
-    box-shadow:0 0 30px rgba(0,255,255,0.6);
+
+/* Background Bintang */
+.stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png');
+  animation: moveStars 60s linear infinite;
+  z-index: -1;
 }
-h2{text-align:center;color:cyan;margin-bottom:5px}
-.subtitle{text-align:center;font-size:12px;color:#aaa;margin-bottom:20px}
-label{font-size:13px;font-weight:bold}
-input,select,textarea{
-    width:100%;
-    padding:8px;
-    margin-top:5px;
-    margin-bottom:15px;
-    border-radius:10px;
-    border:none;
-    outline:none;
+
+@keyframes moveStars {
+  from {background-position: 0 0;}
+  to {background-position: 10000px 5000px;}
 }
-textarea{resize:none}
-button{
-    width:100%;
-    padding:10px;
-    border:none;
-    border-radius:10px;
-    background:cyan;
-    color:black;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-    margin-top:5px;
+
+.container {
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  margin: 50px auto;
+  box-shadow: 0 0 25px rgba(255,255,255,0.3);
 }
-button:hover{box-shadow:0 0 15px cyan}
-.admin-panel{
-    display:none;
-    margin-top:20px;
-    background:#111;
-    padding:15px;
-    border-radius:15px;
+
+.logo {
+  display: block;
+  margin: 0 auto 15px;
+  width: 120px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255,255,255,0.7);
 }
-.status{
-    text-align:center;
-    margin-top:15px;
-    font-weight:bold;
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px white;
 }
-.small-btn{
-    background:#444;
-    color:white;
-    font-size:12px;
-    margin-top:10px;
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, #25D366, #1ebe5d);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 15px #25D366;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #25D366;
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 10px;
+  color: gray;
 }
 </style>
 </head>
+
 <body>
 
+<div class="stars"></div>
+
 <div class="container">
-<h2>🚀 EAC Creator System</h2>
-<div class="subtitle">Elite Astronomy Creator Recruitment</div>
 
-<form id="eacForm">
-<label>Nama:</label>
-<input type="text" name="nama" required>
+<img src="logo.png" alt="Logo EAC" class="logo">
+<h2>Pendaftaran Kreator EAC</h2>
 
-<label>Umur:</label>
-<input type="number" name="umur" required>
+<form onsubmit="kirimWhatsApp(); return false;">
+  <input type="text" id="nama" placeholder="Nama Lengkap" required>
+  <input type="number" id="umur" placeholder="Umur" required>
 
-<label>Status:</label>
-<select name="status" required>
-<option value="">-- Pilih Status --</option>
-<option value="Pelajar">Pelajar</option>
-<option value="Pekerja">Pekerja</option>
-<option value="Berkeluarga">Berkeluarga</option>
-</select>
+  <select id="status" required>
+    <option value="">Pilih Status</option>
+    <option>Pelajar</option>
+    <option>Pekerja</option>
+    <option>Berkeluarga</option>
+  </select>
 
-<label>Alasan ingin menjadi anggota kreator EAC:</label>
-<textarea name="alasan" rows="3" required></textarea>
+  <input type="text" id="tiktok" placeholder="Nama Akun TikTok" required>
+  <input type="text" id="film" placeholder="Film/Animasi Astronomi Favorit" required>
+  <textarea id="alasan" placeholder="Alasan ingin menjadi anggota kreator EAC" required></textarea>
 
-<label>Nama akun TikTok:</label>
-<input type="text" name="tiktok" required>
-
-<label>Film/Animasi Astronomi favorit:</label>
-<input type="text" name="film" required>
-
-<label>Screenshot akun TikTok:</label>
-<input type="file" required>
-
-<button type="submit">Kirim Pendaftaran</button>
+  <button type="submit">Daftar via WhatsApp</button>
 </form>
 
-<div class="status" id="statusText"></div>
-
-<button class="small-btn" onclick="toggleAdmin()">🔒 Admin Panel</button>
-
-<div class="admin-panel" id="adminPanel">
-<h3>Panel Seleksi Admin</h3>
-<button onclick="setStatus('DITERIMA ✅')">Terima</button>
-<button onclick="setStatus('DITOLAK ❌')">Tolak</button>
-<button onclick="resetStatus()">Reset</button>
+<div class="footer">
+© 2026 EAC Creator Community
 </div>
+
 </div>
 
 <script>
-const form=document.getElementById('eacForm');
-const statusText=document.getElementById('statusText');
-const adminPanel=document.getElementById('adminPanel');
+function kirimWhatsApp() {
+  var nama = document.getElementById("nama").value;
+  var umur = document.getElementById("umur").value;
+  var status = document.getElementById("status").value;
+  var tiktok = document.getElementById("tiktok").value;
+  var film = document.getElementById("film").value;
+  var alasan = document.getElementById("alasan").value;
 
-form.addEventListener('submit',function(e){
-    e.preventDefault();
+  var nomor = "6283865255697";
 
-    const data={
-        nama:form.nama.value,
-        umur:form.umur.value,
-        status:form.status.value,
-        alasan:form.alasan.value,
-        tiktok:form.tiktok.value,
-        film:form.film.value
-    };
+  var pesan = "Halo Admin EAC,%0A%0ASaya ingin mendaftar:%0A%0A" +
+              "Nama: " + nama + "%0A" +
+              "Umur: " + umur + "%0A" +
+              "Status: " + status + "%0A" +
+              "Akun TikTok: " + tiktok + "%0A" +
+              "Film/Animasi Favorit: " + film + "%0A" +
+              "Alasan: " + alasan;
 
-    localStorage.setItem('EAC_Data',JSON.stringify(data));
-
-    statusText.innerHTML="⏳ Menunggu Seleksi Admin...";
-    statusText.style.color="orange";
-
-    alert("🚀 Pendaftaran berhasil dikirim!");
-    form.reset();
-});
-
-function toggleAdmin(){
-    const password=prompt("Masukkan Password Admin:");
-    if(password==="EAC2026"){
-        adminPanel.style.display="block";
-    }else{
-        alert("Password salah!");
-    }
-}
-
-function setStatus(text){
-    statusText.innerHTML=text;
-    statusText.style.color=text.includes('DITERIMA')?'lightgreen':'red';
-}
-
-function resetStatus(){
-    statusText.innerHTML="";
+  window.open("https://wa.me/" + nomor + "?text=" + pesan, "_blank");
 }
 </script>
 
