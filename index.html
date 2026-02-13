@@ -3,126 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pendaftaran Marga EAC</title>
-
+<title>Pendaftaran Marga EAC - Planetarium</title>
 <style>
 body {
-  margin: 0;
+  margin:0;
   font-family: Arial, sans-serif;
   background: radial-gradient(circle at bottom, #0d1b2a, #000814);
-  overflow: hidden;
-  color: white;
-  position: relative;
-  height: 100vh;
+  overflow:hidden;
+  color:white;
+  height:100vh;
+  position:relative;
 }
 
-/* 🌌 Nebula lembut & berubah warna */
+/* 🌌 Nebula multi-layer */
 .nebula {
-  position: fixed;
-  width: 200%;
-  height: 200%;
-  top: -50%;
-  left: -50%;
-  background: radial-gradient(circle at 30% 30%, rgba(128,0,128,0.2), transparent 50%),
-              radial-gradient(circle at 70% 70%, rgba(0,128,255,0.2), transparent 50%);
-  animation: nebulaMove 60s infinite alternate, nebulaColor 120s infinite alternate;
-  z-index: -4;
+  position:fixed; width:250%; height:250%; top:-75%; left:-75%;
+  background: radial-gradient(circle at 25% 25%, rgba(128,0,128,0.2), transparent 50%),
+              radial-gradient(circle at 75% 75%, rgba(0,128,255,0.2), transparent 50%),
+              radial-gradient(circle at 50% 50%, rgba(255,0,128,0.15), transparent 50%);
+  animation: nebulaMove 150s infinite alternate, nebulaColor 200s infinite alternate;
+  z-index:-4;
 }
-@keyframes nebulaMove {0%{transform:translate(0,0);}100%{transform:translate(80px,50px);}}
-@keyframes nebulaColor {0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(180deg);}}
+@keyframes nebulaMove {0%{transform:translate(0,0);}100%{transform:translate(200px,100px);}}
+@keyframes nebulaColor {0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(360deg);}}
 
-/* ⭐ Bintang berkelap-kelip */
-.stars {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: transparent url('https://www.transparenttextures.com/patterns/stardust.png');
-  z-index: -3;
-}
+/* ⭐ Bintang ribuan */
+.stars {position:fixed;width:100%;height:100%;background:transparent; z-index:-3;}
 .star {
-  position: absolute;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.8;
+  position:absolute; background:white; border-radius:50%; opacity:0.8;
   animation: blink 3s infinite alternate;
 }
-@keyframes blink {0%{opacity:0.2;}50%{opacity:1;}100%{opacity:0.2;}}
+@keyframes blink {0%{opacity:0.1;}50%{opacity:1;}100%{opacity:0.1;}}
 
 /* 🪐 Planet Saturnus */
 .saturn {
-  position: fixed;
-  top: 15%;
-  right: -200px;
-  width: 140px;
-  height: 140px;
-  background: radial-gradient(circle at 30% 30%, #f4a261, #7f5539);
-  border-radius: 50%;
-  box-shadow: 0 0 40px rgba(255,180,100,0.6);
-  animation: moveSaturn 60s linear infinite;
-  z-index: -2;
+  position:fixed; top:15%; right:-200px; width:180px; height:180px;
+  background: radial-gradient(circle at 30% 30%, #f4a261, #7f5539); border-radius:50%;
+  box-shadow:0 0 60px rgba(255,180,100,0.9);
+  animation: moveSaturn 100s linear infinite; z-index:-2;
 }
-.ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200px;
-  height: 50px;
-  border: 6px solid rgba(255,255,255,0.6);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) rotate(25deg);
+.ring{
+  position:absolute; top:50%; left:50%; width:240px; height:60px;
+  border:6px solid rgba(255,255,255,0.6); border-radius:50%;
+  transform:translate(-50%,-50%) rotate(25deg);
 }
-@keyframes moveSaturn {from{right:-200px;}to{right:110%;}}
+@keyframes moveSaturn {from{right:-200px;}to{right:130%;}}
 
-/* 🌕 Planet kecil berputar */
-.small-planet {
-  position: fixed;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+/* 🌕 Planet kecil */
+.small-planet{
+  position:fixed;width:50px;height:50px;border-radius:50%;
+  box-shadow:0 0 15px rgba(255,255,255,0.6);
   background: radial-gradient(circle at 30% 30%, #ffb347, #ffcc33);
-  animation: moveSmallPlanet linear infinite, rotatePlanet 20s linear infinite;
-  z-index: -2;
+  animation: moveSmallPlanet linear infinite, rotatePlanet 20s linear infinite; z-index:-2;
 }
-@keyframes moveSmallPlanet {from{top:80%; left:-50px;}to{top:10%; left:110%;}}
-@keyframes rotatePlanet {from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes moveSmallPlanet{from{top:80%;left:-60px;}to{top:10%;left:110%;}}
+@keyframes rotatePlanet{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 
 /* ☄️ Meteor */
-.meteor {
-  position: fixed;
-  width: 4px;
-  height: 80px;
-  background: linear-gradient(to bottom, white, transparent);
-  transform: rotate(45deg);
-  opacity: 0.8;
-  z-index: -1;
-  pointer-events: none;
-}
+.meteor{position:fixed;width:4px;height:80px;background:linear-gradient(to bottom, white, transparent);
+  opacity:0.9; z-index:-1; pointer-events:none;}
 
-/* Form Container Transparan */
-.container {
-  background: rgba(0,0,0,0.35);
-  padding: 25px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 420px;
-  margin: 60px auto;
-  box-shadow: 0 0 25px rgba(255,255,255,0.2);
-  backdrop-filter: blur(8px);
+/* Form Transparan */
+.container{
+  background:rgba(0,0,0,0.35); padding:25px;border-radius:15px;
+  width:90%; max-width:450px; margin:60px auto;
+  box-shadow:0 0 35px rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px);
 }
-h2{text-align:center;text-shadow:0 0 8px white;}
-input, select, textarea{
-  width:100%; padding:10px; margin:8px 0; border-radius:8px; border:none; background:rgba(255,255,255,0.1); color:white;
-}
-input::placeholder, textarea::placeholder{color: rgba(255,255,255,0.7);}
-button{
-  width:100%; padding:12px; background:#25D366; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; box-shadow:0 0 15px #25D366; transition:0.3s;
-}
+h2{text-align:center;text-shadow:0 0 12px white;}
+input,select,textarea{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;
+  background:rgba(255,255,255,0.1);color:white;}
+input::placeholder,textarea::placeholder{color: rgba(255,255,255,0.7);}
+button{width:100%;padding:12px;background:#25D366;color:white;border:none;border-radius:8px;
+  font-size:16px;cursor:pointer;box-shadow:0 0 25px #25D366;transition:0.3s;}
 button:hover{transform:scale(1.05);}
 </style>
 </head>
 <body>
-
 <div class="nebula"></div>
 <div class="stars"></div>
 <div class="saturn"><div class="ring"></div></div>
@@ -147,47 +104,49 @@ button:hover{transform:scale(1.05);}
 </div>
 
 <script>
-// Ganti dengan URL Web App Google Sheets
-const SHEET_URL = "YOUR_GOOGLE_WEB_APP_URL_HERE";
+// Nomor WA tujuan
+const WA_NUMBER = "6283865255697";
 
-// Submit form
 document.getElementById("formDaftar").addEventListener("submit", function(e){
   e.preventDefault();
-  const data = new FormData(e.target);
-  const params = new URLSearchParams(data).toString();
-  fetch(SHEET_URL, { method: "POST", body: params })
-  .then(res => {
-    window.open("https://chat.whatsapp.com/HdidfTDP1xoBAqsbXlSHO6", "_blank");
-    e.target.reset();
-  })
-  .catch(err => alert("Gagal mengirim data, coba lagi."));
+  const nama = document.getElementById("nama").value;
+  const umur = document.getElementById("umur").value;
+  const status = document.getElementById("status").value;
+  const alasan = document.getElementById("alasan").value;
+  const tiktok = document.getElementById("tiktok").value;
+  const film = document.getElementById("film").value;
+
+  const message = `Halo, ada member baru mendaftar:\nNama: ${nama}\nUmur: ${umur}\nStatus: ${status}\nAlasan: ${alasan}\nTikTok: ${tiktok}\nFilm/Animasi: ${film}`;
+  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(url,"_blank");
+  e.target.reset();
 });
 
-// Meteor acak dari semua arah
+// Meteor acak & cepat
 function createMeteor(){
   const meteor = document.createElement("div");
   meteor.classList.add("meteor");
   const startLeft = Math.random()*window.innerWidth;
   const startTop = Math.random()*window.innerHeight;
-  const angle = 30 + Math.random()*60;
+  const angle = 20 + Math.random()*70;
   meteor.style.left = startLeft+"px";
   meteor.style.top = startTop+"px";
   meteor.style.transform = `rotate(${angle}deg)`;
-  const duration = 3 + Math.random()*3;
+  const duration = 1.5 + Math.random()*2;
   document.body.appendChild(meteor);
-  meteor.animate([{transform:`rotate(${angle}deg) translateY(0px)`},{transform:`rotate(${angle}deg) translateY(${window.innerHeight+100}px)`}], {duration: duration*1000});
+  meteor.animate([{transform:`rotate(${angle}deg) translateY(0px)`},{transform:`rotate(${angle}deg) translateY(${window.innerHeight+150}px)`}], {duration: duration*1000});
   setTimeout(()=>document.body.removeChild(meteor), duration*1000);
 }
-setInterval(createMeteor, 300);
+setInterval(createMeteor, 150);
 
-// Bintang berkelip acak
-for(let i=0;i<120;i++){
+// Bintang ribuan & berkedip
+for(let i=0;i<300;i++){
   const star = document.createElement("div");
   star.classList.add("star");
-  star.style.width = star.style.height = (1+Math.random()*2)+"px";
+  star.style.width = star.style.height = (1+Math.random()*3)+"px";
   star.style.top = Math.random()*window.innerHeight+"px";
   star.style.left = Math.random()*window.innerWidth+"px";
-  star.style.animationDuration = (2+Math.random()*3)+"s";
+  star.style.animationDuration = (0.5+Math.random()*3)+"s";
   document.body.appendChild(star);
 }
 
@@ -197,11 +156,11 @@ function createSmallPlanet(){
   planet.classList.add("small-planet");
   const startTop = 50+Math.random()*400;
   planet.style.top = startTop+"px";
-  planet.style.animationDuration = (60+Math.random()*40)+"s";
+  planet.style.animationDuration = (50+Math.random()*50)+"s";
   document.body.appendChild(planet);
   setTimeout(()=>document.body.removeChild(planet),100000);
 }
-for(let i=0;i<3;i++) createSmallPlanet();
+for(let i=0;i<7;i++) createSmallPlanet();
 </script>
 </body>
-  </html>
+    </html>
