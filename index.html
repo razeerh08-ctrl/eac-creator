@@ -13,9 +13,10 @@ body {
   overflow: hidden;
   color: white;
   position: relative;
+  height: 100vh;
 }
 
-/* 🌌 Nebula lembut */
+/* 🌌 Nebula lembut & berubah warna */
 .nebula {
   position: fixed;
   width: 200%;
@@ -24,29 +25,28 @@ body {
   left: -50%;
   background: radial-gradient(circle at 30% 30%, rgba(128,0,128,0.2), transparent 50%),
               radial-gradient(circle at 70% 70%, rgba(0,128,255,0.2), transparent 50%);
-  animation: nebulaMove 120s linear infinite;
+  animation: nebulaMove 60s infinite alternate, nebulaColor 120s infinite alternate;
   z-index: -4;
 }
+@keyframes nebulaMove {0%{transform:translate(0,0);}100%{transform:translate(80px,50px);}}
+@keyframes nebulaColor {0%{filter:hue-rotate(0deg);}100%{filter:hue-rotate(180deg);}}
 
-@keyframes nebulaMove {
-  0% { transform: translate(0,0); }
-  100% { transform: translate(50px,50px); }
-}
-
-/* ⭐ Bintang Halus */
+/* ⭐ Bintang berkelap-kelip */
 .stars {
   position: fixed;
   width: 100%;
   height: 100%;
   background: transparent url('https://www.transparenttextures.com/patterns/stardust.png');
-  animation: moveStars 200s linear infinite;
   z-index: -3;
 }
-
-@keyframes moveStars {
-  from {background-position: 0 0;}
-  to {background-position: 10000px 5000px;}
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: blink 3s infinite alternate;
 }
+@keyframes blink {0%{opacity:0.2;}50%{opacity:1;}100%{opacity:0.2;}}
 
 /* 🪐 Planet Saturnus */
 .saturn {
@@ -61,7 +61,6 @@ body {
   animation: moveSaturn 60s linear infinite;
   z-index: -2;
 }
-
 .ring {
   position: absolute;
   top: 50%;
@@ -72,13 +71,9 @@ body {
   border-radius: 50%;
   transform: translate(-50%, -50%) rotate(25deg);
 }
+@keyframes moveSaturn {from{right:-200px;}to{right:110%;}}
 
-@keyframes moveSaturn {
-  from { right: -200px; }
-  to { right: 110%; }
-}
-
-/* 🌕 Planet kecil tambahan */
+/* 🌕 Planet kecil berputar */
 .small-planet {
   position: fixed;
   width: 40px;
@@ -86,14 +81,11 @@ body {
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(255,255,255,0.5);
   background: radial-gradient(circle at 30% 30%, #ffb347, #ffcc33);
-  animation: moveSmallPlanet 80s linear infinite;
+  animation: moveSmallPlanet linear infinite, rotatePlanet 20s linear infinite;
   z-index: -2;
 }
-
-@keyframes moveSmallPlanet {
-  from { top: 80%; left: -50px; }
-  to { top: 10%; left: 110%; }
-}
+@keyframes moveSmallPlanet {from{top:80%; left:-50px;}to{top:10%; left:110%;}}
+@keyframes rotatePlanet {from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 
 /* ☄️ Meteor */
 .meteor {
@@ -104,6 +96,7 @@ body {
   transform: rotate(45deg);
   opacity: 0.8;
   z-index: -1;
+  pointer-events: none;
 }
 
 /* Form Container Transparan */
@@ -117,125 +110,98 @@ body {
   box-shadow: 0 0 25px rgba(255,255,255,0.2);
   backdrop-filter: blur(8px);
 }
-
-h2 {
-  text-align: center;
-  text-shadow: 0 0 8px white;
+h2{text-align:center;text-shadow:0 0 8px white;}
+input, select, textarea{
+  width:100%; padding:10px; margin:8px 0; border-radius:8px; border:none; background:rgba(255,255,255,0.1); color:white;
 }
-
-input, select, textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: none;
-  background: rgba(255,255,255,0.1);
-  color: white;
+input::placeholder, textarea::placeholder{color: rgba(255,255,255,0.7);}
+button{
+  width:100%; padding:12px; background:#25D366; color:white; border:none; border-radius:8px; font-size:16px; cursor:pointer; box-shadow:0 0 15px #25D366; transition:0.3s;
 }
-
-input::placeholder,
-textarea::placeholder {
-  color: rgba(255,255,255,0.7);
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  background: #25D366;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 0 15px #25D366;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.05);
-}
+button:hover{transform:scale(1.05);}
 </style>
 </head>
-
 <body>
 
 <div class="nebula"></div>
 <div class="stars"></div>
-<div class="saturn">
-  <div class="ring"></div>
-</div>
+<div class="saturn"><div class="ring"></div></div>
 <div class="small-planet"></div>
 
 <div class="container">
 <h2>Pendaftaran Marga EAC</h2>
-
-<form onsubmit="submitToGroup(); return false;">
+<form id="formDaftar">
   <input type="text" id="nama" placeholder="Nama Lengkap" required>
   <input type="number" id="umur" placeholder="Umur" required>
-
   <select id="status" required>
     <option value="">Pilih Status</option>
     <option>Pelajar</option>
     <option>Pekerja</option>
     <option>Berkeluarga</option>
   </select>
-
   <textarea id="alasan" placeholder="Alasan ingin menjadi anggota kreator EAC" required></textarea>
-
   <input type="text" id="tiktok" placeholder="Nama akun TikTok kamu" required>
-
   <input type="text" id="film" placeholder="Film/Animasi astronomi yang kamu suka" required>
-
   <button type="submit">Daftar Sekarang</button>
 </form>
-
 </div>
 
 <script>
-// Redirect ke grup WA
-function submitToGroup() {
-  var grupLink = "https://chat.whatsapp.com/HdidfTDP1xoBAqsbXlSHO6";
-  window.open(grupLink, "_blank");
-}
+// Ganti dengan URL Web App Google Sheets
+const SHEET_URL = "YOUR_GOOGLE_WEB_APP_URL_HERE";
 
-// Buat meteor acak
-function createMeteor() {
-  var meteor = document.createElement("div");
+// Submit form
+document.getElementById("formDaftar").addEventListener("submit", function(e){
+  e.preventDefault();
+  const data = new FormData(e.target);
+  const params = new URLSearchParams(data).toString();
+  fetch(SHEET_URL, { method: "POST", body: params })
+  .then(res => {
+    window.open("https://chat.whatsapp.com/HdidfTDP1xoBAqsbXlSHO6", "_blank");
+    e.target.reset();
+  })
+  .catch(err => alert("Gagal mengirim data, coba lagi."));
+});
+
+// Meteor acak dari semua arah
+function createMeteor(){
+  const meteor = document.createElement("div");
   meteor.classList.add("meteor");
-
-  // posisi acak horizontal dan durasi acak
-  var startLeft = Math.random() * window.innerWidth;
-  var duration = 4 + Math.random() * 4; // 4-8 detik
-  meteor.style.left = startLeft + "px";
-  meteor.style.animation = `meteorFall ${duration}s linear forwards`;
-
+  const startLeft = Math.random()*window.innerWidth;
+  const startTop = Math.random()*window.innerHeight;
+  const angle = 30 + Math.random()*60;
+  meteor.style.left = startLeft+"px";
+  meteor.style.top = startTop+"px";
+  meteor.style.transform = `rotate(${angle}deg)`;
+  const duration = 3 + Math.random()*3;
   document.body.appendChild(meteor);
-
-  setTimeout(() => { document.body.removeChild(meteor); }, duration * 1000);
+  meteor.animate([{transform:`rotate(${angle}deg) translateY(0px)`},{transform:`rotate(${angle}deg) translateY(${window.innerHeight+100}px)`}], {duration: duration*1000});
+  setTimeout(()=>document.body.removeChild(meteor), duration*1000);
 }
-
-// Lebih banyak meteor acak setiap 0.3 detik
 setInterval(createMeteor, 300);
 
-// Bisa buat beberapa planet kecil tambahan
-function createSmallPlanet() {
-  var planet = document.createElement("div");
-  planet.classList.add("small-planet");
-
-  // posisi acak vertikal dan durasi acak
-  var startTop = 50 + Math.random() * 400;
-  planet.style.top = startTop + "px";
-  planet.style.animationDuration = (60 + Math.random()*40) + "s";
-
-  document.body.appendChild(planet);
-
-  setTimeout(() => { document.body.removeChild(planet); }, 100000); // durasi sangat lama
+// Bintang berkelip acak
+for(let i=0;i<120;i++){
+  const star = document.createElement("div");
+  star.classList.add("star");
+  star.style.width = star.style.height = (1+Math.random()*2)+"px";
+  star.style.top = Math.random()*window.innerHeight+"px";
+  star.style.left = Math.random()*window.innerWidth+"px";
+  star.style.animationDuration = (2+Math.random()*3)+"s";
+  document.body.appendChild(star);
 }
 
-// Buat 3 planet kecil
-for (let i=0; i<3; i++) createSmallPlanet();
-
+// Planet kecil tambahan
+function createSmallPlanet(){
+  const planet = document.createElement("div");
+  planet.classList.add("small-planet");
+  const startTop = 50+Math.random()*400;
+  planet.style.top = startTop+"px";
+  planet.style.animationDuration = (60+Math.random()*40)+"s";
+  document.body.appendChild(planet);
+  setTimeout(()=>document.body.removeChild(planet),100000);
+}
+for(let i=0;i<3;i++) createSmallPlanet();
 </script>
-
 </body>
-</html>
+  </html>
