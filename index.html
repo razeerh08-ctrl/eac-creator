@@ -10,8 +10,27 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: radial-gradient(circle at bottom, #0d1b2a, #000814);
-  overflow-x: hidden;
+  overflow: hidden;
   color: white;
+  position: relative;
+}
+
+/* 🌌 Nebula lembut */
+.nebula {
+  position: fixed;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle at 30% 30%, rgba(128,0,128,0.2), transparent 50%),
+              radial-gradient(circle at 70% 70%, rgba(0,128,255,0.2), transparent 50%);
+  animation: nebulaMove 120s linear infinite;
+  z-index: -4;
+}
+
+@keyframes nebulaMove {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(50px,50px); }
 }
 
 /* ⭐ Bintang Halus */
@@ -59,41 +78,49 @@ body {
   to { right: 110%; }
 }
 
+/* 🌕 Planet kecil tambahan */
+.small-planet {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+  background: radial-gradient(circle at 30% 30%, #ffb347, #ffcc33);
+  animation: moveSmallPlanet 80s linear infinite;
+  z-index: -2;
+}
+
+@keyframes moveSmallPlanet {
+  from { top: 80%; left: -50px; }
+  to { top: 10%; left: 110%; }
+}
+
 /* ☄️ Meteor */
 .meteor {
   position: fixed;
-  top: -50px;
-  left: -50px;
   width: 4px;
   height: 80px;
   background: linear-gradient(to bottom, white, transparent);
   transform: rotate(45deg);
   opacity: 0.8;
-  animation: meteorFall 8s linear infinite;
   z-index: -1;
 }
 
-@keyframes meteorFall {
-  0% { top: -50px; left: -50px; opacity: 0; }
-  10% { opacity: 1; }
-  100% { top: 110%; left: 110%; opacity: 0; }
-}
-
-/* Form Container */
+/* Form Container Transparan */
 .container {
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.35);
   padding: 25px;
   border-radius: 15px;
   width: 90%;
   max-width: 420px;
   margin: 60px auto;
-  box-shadow: 0 0 25px rgba(255,255,255,0.3);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
 }
 
 h2 {
   text-align: center;
-  text-shadow: 0 0 10px white;
+  text-shadow: 0 0 8px white;
 }
 
 input, select, textarea {
@@ -102,6 +129,13 @@ input, select, textarea {
   margin: 8px 0;
   border-radius: 8px;
   border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255,255,255,0.7);
 }
 
 button {
@@ -125,18 +159,17 @@ button:hover {
 
 <body>
 
+<div class="nebula"></div>
 <div class="stars"></div>
-
 <div class="saturn">
   <div class="ring"></div>
 </div>
-
-<div class="meteor"></div>
+<div class="small-planet"></div>
 
 <div class="container">
 <h2>Pendaftaran Marga EAC</h2>
 
-<form onsubmit="kirimWhatsApp(); return false;">
+<form onsubmit="submitToGroup(); return false;">
   <input type="text" id="nama" placeholder="Nama Lengkap" required>
   <input type="number" id="umur" placeholder="Umur" required>
 
@@ -153,34 +186,56 @@ button:hover {
 
   <input type="text" id="film" placeholder="Film/Animasi astronomi yang kamu suka" required>
 
-  <button type="submit">Kirim Pendaftaran</button>
+  <button type="submit">Daftar Sekarang</button>
 </form>
 
 </div>
 
 <script>
-function kirimWhatsApp() {
-  var nama = document.getElementById("nama").value;
-  var umur = document.getElementById("umur").value;
-  var status = document.getElementById("status").value;
-  var alasan = document.getElementById("alasan").value;
-  var tiktok = document.getElementById("tiktok").value;
-  var film = document.getElementById("film").value;
-
-  // Nomor WhatsApp kamu versi internasional
-  var nomor = "6283865255697";
-
-  var pesan = "Halo Admin Marga EAC,%0A%0ASaya ingin mendaftar:%0A%0A" +
-              "Nama: " + nama + "%0A" +
-              "Umur: " + umur + "%0A" +
-              "Status: " + status + "%0A" +
-              "Alasan: " + alasan + "%0A" +
-              "Akun TikTok: " + tiktok + "%0A" +
-              "Film/Animasi: " + film;
-
-  window.open("https://wa.me/" + nomor + "?text=" + pesan, "_blank");
+// Redirect ke grup WA
+function submitToGroup() {
+  var grupLink = "https://chat.whatsapp.com/HdidfTDP1xoBAqsbXlSHO6";
+  window.open(grupLink, "_blank");
 }
+
+// Buat meteor acak
+function createMeteor() {
+  var meteor = document.createElement("div");
+  meteor.classList.add("meteor");
+
+  // posisi acak horizontal dan durasi acak
+  var startLeft = Math.random() * window.innerWidth;
+  var duration = 4 + Math.random() * 4; // 4-8 detik
+  meteor.style.left = startLeft + "px";
+  meteor.style.animation = `meteorFall ${duration}s linear forwards`;
+
+  document.body.appendChild(meteor);
+
+  setTimeout(() => { document.body.removeChild(meteor); }, duration * 1000);
+}
+
+// Lebih banyak meteor acak setiap 0.3 detik
+setInterval(createMeteor, 300);
+
+// Bisa buat beberapa planet kecil tambahan
+function createSmallPlanet() {
+  var planet = document.createElement("div");
+  planet.classList.add("small-planet");
+
+  // posisi acak vertikal dan durasi acak
+  var startTop = 50 + Math.random() * 400;
+  planet.style.top = startTop + "px";
+  planet.style.animationDuration = (60 + Math.random()*40) + "s";
+
+  document.body.appendChild(planet);
+
+  setTimeout(() => { document.body.removeChild(planet); }, 100000); // durasi sangat lama
+}
+
+// Buat 3 planet kecil
+for (let i=0; i<3; i++) createSmallPlanet();
+
 </script>
 
 </body>
-  </html>
+</html>
